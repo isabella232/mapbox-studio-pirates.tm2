@@ -57,7 +57,7 @@
   }
 }
 
-#water_label::ships {
+#water_name::ships {
   marker-width:0;
   marker-line-width:0;
   marker-fill:rgba(0,0,0,0);

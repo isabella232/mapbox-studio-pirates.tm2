@@ -15,7 +15,7 @@ Map {
 
 // Political boundaries //
 
-#admin[maritime=0][zoom>=3] {
+#boundary[zoom>=3] {
   line-join: round;
   line-color: #478;
   comp-op:multiply;
@@ -31,7 +31,7 @@ Map {
     }
   }
   // States / Provices / Subregions
-  [admin_level>=3] {
+  [admin_level>=3][admin_level<=6] {
     line-width: 0.4;
     line-dasharray: 10,3,3,3;
     [zoom>=6] { line-width: 1; }
@@ -73,15 +73,15 @@ Map {
 
 #waterway {
   comp-op:multiply;
-  [type='river'],
-  [type='canal'] {
+  [class='river'],
+  [class='canal'] {
     line-color: @water;
     line-width: 0.5;
     [zoom>=12] { line-width: 1; }
     [zoom>=14] { line-width: 2; }
     [zoom>=16] { line-width: 3; }
   }
-  [type='stream'] {
+  [class='stream'] {
     line-color: @water;
     line-width: 0.5;
     [zoom>=14] { line-width: 1; }
@@ -92,6 +92,32 @@ Map {
 
 
 // Landuse areas //
+#landcover {
+  ::wood[class='wood'] {
+    line-color:#C3CFB4;
+    line-opacity:0.33;
+    line-width:3;
+    line-join:round;
+    polygon-pattern-file:url(img/forest.png);
+    polygon-pattern-alignment:global;
+    comp-op:multiply;
+    opacity:0.5;
+  }
+}
+
+#park {
+  ::glow {
+    comp-op:multiply;
+    line-color:#ddb; 
+      line-width:2;
+      line-join:round;
+  }
+  ::main[zoom>=0] {
+    comp-op:multiply;
+      polygon-pattern-file:url(img/park.png);
+      polygon-pattern-alignment:global;
+  }
+}
 
 #landuse {
   ::glow {
@@ -115,16 +141,7 @@ Map {
       polygon-opacity:0.5;
     }
   }
-  ::wood[class='wood'] {
-    line-color:#C3CFB4;
-    line-opacity:0.33;
-    line-width:3;
-    line-join:round;
-    polygon-pattern-file:url(img/forest.png);
-    polygon-pattern-alignment:global;
-    comp-op:multiply;
-    opacity:0.5;
-  }
+
 }
 
 
@@ -146,29 +163,30 @@ Map {
 
 #tunnel { opacity: 0.5; }
 
-#road,
-#tunnel,
-#bridge {
+#transportation {
   ['mapnik::geometry_type'=2] {
     line-width: 1;
     line-color:#edc;
     line-comp-op:multiply;
     [class='motorway'],
-    [class='main'],
-    [class='motorway_link']{
+    [class='trunk'],
+    [class='primary'],
+    [class='secondary'],
+    [class='tertiary'],
+    [class='motorway'][ramp=1]{
       line-color:#dba;
       [zoom>=10] { line-width: 1; }
       [zoom>=12] { line-width: 2; }
       [zoom>=14] { line-width: 3; }
       [zoom>=16] { line-width: 5; }
     }
-    [class='street'],
-    [class='street_limited'] {
+    [class='minor'],
+    [class='service'] {
       [zoom>=13] { line-width: 1.4; }
       [zoom>=14] { line-width: 2; }
       [zoom>=16] { line-width: 3; }
     }
-    [class='street_limited'] { line-dasharray: 4,1; }
+    [class='service'] { line-dasharray: 4,1; }
     [class='path'] { line-dasharray: 3,2; }
   }
 }

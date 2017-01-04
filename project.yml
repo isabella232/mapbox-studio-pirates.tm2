@@ -18,7 +18,7 @@ layers: null
 maxzoom: 21
 minzoom: 0
 name: Pirates Return
-source: "mapbox:///mapbox.mapbox-streets-v6"
+source: "http://openmaptiles.org/cdn.json"
 styles: 
   - style.mss
   - labels.mss
